@@ -1,51 +1,260 @@
-README
-
-included:
-All source files (.cc, .hh, .cpp, .h)
-this README
-Makefile
-Output dumped by gprof for 5 tests (see below on why I don't have profiling data for BST/words.txt test)
-
-Homework #5
-
-I'd like to first mention that the biggest problems I encountered during this project were really stupid and idiotic typos; simple things like accidentally putting a colon where a semicolon belong (for the last method of a class of all cases! Gave me weird errors about no constructor body) or dumb errors in my Makefile, which caused all sorts of weird compiling issues.
-
-Anyway, my implementation of this homework is what I call the "lazy way".  In other words, I tried to make my life as easy as possible while still maintaining the guidelines.  When I say " as easy as possible," I'm actually only considering the present.  Because of this, my AVL and Splay trees are not templated (i.e. they inherit from BinarySearchTree< string, int >).  Also, I didn't want to worry about messy inheritance issues stemming from using an AVLNode that inheritsfrom a BSTNode, so in order to implement height, I altered BSTNode and its constructor.  No other reason than simplicity.  Height is initialized by default to 0, and is only updated during AVLTree inserts (and rotations, etc.).  Height is not updated (nor used) in any other case.
-
-A lot of the code used in my AVL tree looks quite similar to the textbook's.  I tried my hardest not to copy, but I have this uncanny ability to memorize things really easily (really!), so it was hard not to implement the same way.  Rest assured though, I pretty much wrote AVLTree without consulting the text while I was coding.  SplayTree I completely wrote myself, since there is no sample code.  Just had to get that confession out of the way.
-
-Also, for Splay trees, the tree is splayed during Inserts and Finds (even though Find is never used in my code, I still implemented it).  If a key can't be found, then it splays it's parent.  If there is a collision during Insert, the value is incremented and then that node is splayed.
-
-In fact, for all inserts, if there is a collision, the value of that key is incremented by one.  I directly altered the BST code to do this for BST's.
-
-For the HeapSort algorithm, I felt it'd be more efficient to not create an additional heap data structure.  Instead, I used an array, keeping in mind that children were in index 2i+1 and 2i+2.  In order to maintain key and value relationships, anytime a value changed position in the array, the key would also change position in the exact same way.  
-
-One thing you may notice is that I migrated over to strings.  My previous assignments used char arrays, but for this assignment where lots of comparisons are needed, it made it easier to just use strings.
-
-And finally... (drumroll please...)
-
-Well first of all, comparing plays with stories is probably NOT the most effective way of looking for similarities.  For example, it is natural to assume that in plays, "I", "you", "me", etc. would be used far more often than in stories.  However, there are some interesting (and uninteresting) similarities.
-
-Looking at the top 5 through 10 words used, they are quite similar to each other, which probably stems more from the fact that both authors used the English language than the possibility that they are the same author.  Looking at the next 10 most used words, differences are noticable.  Bacon uses the word "which" quite often, while Shakespeare rarely uses that word.  Also, for the similar word "that," Bacon also uses more often.  I think this is a key difference which is enough proof to show that they are not similar authors.  This conclusion comes from the assumption of the usage for "which" and "that".  Usually, these two words are used to extend the meaning of something (sorry, I'm not an English major).  Obviously, Bacon likes to use these words more often to link sentences.
+I. File list
+------------
+AVLTNode.cc		AVL tree node (AVLTNode) implementation
+AVLTNode.h		AVLTNode header
+AVLTree.cc		AVL tree (AVLTree) implementation
+AVLTree.h		AVLTree header
+BinarySearchTree.cc	Binary search tree (BinarySearchTree) implementation
+BinarySearchTree.h	BinarySearchTree header
+BSTNode.cc		Binary search tree node (BSTNode) implementation
+BSTNode.h		BSTNode header
+main.cc			driver for word-count
+Makefile		Makefile to build word-count
+MaxHeap.cc		Specialized max binary heap (MaxHeap) implementation
+MaxHeap.h		MaxHeap header
+README			This file
+SplayTree.cc		Splay tree (SplayTree) implementation
+SplayTree.h		SplayTree header
+TemplateInst.cc		Instantiation file for all templated classes
+heapsort.ps             Plot file for heapsort w/ splay tree on 10 files
+quicksort.ps            Plot file for quicksort w/ splay tree on 10 files
+selectionsort.ps        Plot file for selection sort w/ splay tree on 10 files
 
 
-Extra Credit:
-Profiling
-
-I used words.txt and the-new-atlantis.txt to profile my results.
-
-In general, I expect a lot of bottlenecks to occur in the input parsing (i.e., get()'s), since we did learn that input takes a long time.
-
-BSTrees:
-For BSTrees, my expectations were that huge bottlenecks would occur in the Insert() method, and specifically, the FindNode() method called within Insert().  For atlantis, I got some pretty unexpected (but not surprising) results.  Since the data is "random" enough, I'm assuming the tree was probably somewhat balanced.  Because of this, most of the time was spent inputting and comparing strings.  Looking at my code, there are a lot of string comparisons, especially because of the HeapSort.  I should probably expect lots of comparisons in the other profiles.
-
-Unfortunately, I was not able to profile the words.txt run.  I ran the program at around 8:30 pm, but at around 11:00 pm, it was still going, and I decided there wasn't enough time to wait for it.  However, my guess is that FindNode() took FOREVER, since the tree being created was very very VERY unbalanced.  Yech.
-
-AVL Trees:
-I got a somewhat surprising result for AVLTrees.  Out of all the methods I coded, I DID expect RecursiveInsert() to take the longest, but I did NOT expect it to take longer than input and all the other methods in the file that I cannot comprehend.  Now that I think about it, it STILL doesn't make much sense to me.  I mean, the average time it spent within itself (i.e. not including descendents) was 2.84 ms per call.  This I find surprising because RecursiveInsert() is basically a bunch of function calls.  It doesn't even have any loops!  I suppose the easy answer would be its recursive nature.  This was basically the same for words and atlantis.
-
-Splay Trees:
-Ah, good ol' Splay Trees.  I expected Splay to not have many bottlenecks, in terms of its own methods.  This was pretty much correct.  For words, most of the time was spent inputting and outputting (whatever ostream::flush() is...), which is expected since the input is large.  For atlantis, it spent the most time doing string comparisons, and also a lot of rotations, since HasParent() is high up in the rankings.  Insert's probably cost more for atlantis than for words, due to the nature of the input.  Something that really surprised me was that Splay took the longest time for the atlantis test.  I really don't have any ideas why, since I'd expect it to do really well.  Maybe if I used even larger input...
+Program can be built using default make arguments.
 
 
-Overall, the biggest bottleneck in my program would be using BinarySearchTrees with ugly sorted input like words.txt.  The bottleneck is so huge, I didn't have enough time to profile it.  For "normal" input though, input and output are still the biggies, and there really isn't much you can do about it, unless you're an uber-hacker.
+
+II. Design
+----------
+A. Program design
+
+1. Style
+Code given by CSE326 staff was treated as though it was written by a team
+member.  Naming conventions of pre-existing code was changed to match the
+team's preferred style for member functions.
+
+2. Collision handling
+It seemed apparent that because we were generalizing through templates, to have
+the result of doing an operation on some key that already existed be hardcoded
+was not in good form.  This is where the collision policy idea came to bear.
+The general principal is that the end-programmer using a tree should be able to
+specify what happens as a result of a collision by supplying a function to
+handle this event.  In case the end-programmer does not know about function
+pointers, or has no desire to specialize the trees by supplying a collision
+function, a default must be set up.  This directly translates to the
+unparameterized constructor (default), the parameterized constructor (with
+collision function) and the setCollisionPolicy function (in case they need to
+change).
+
+3. bool <function>(param& , param&) signatures
+We wanted to have a way to notify the user of invalid find operations.  Since
+the code is templatized we dont know what type to return for the function.  Thus
+the bool return.  Essentially, if the operation is successful, return true and
+modify the appropriate parameter that was passed in by reference.  If the
+operation fails, return false, and leave the parameter alone.  With this design
+decision made, other similar functions needed to have similar feels to maintain
+a consistant API.
+
+
+B. AVL Tree
+
+1. Insertion
+An interative insert function was written to give better performance because
+recursive functions has to allocate/deallocate multiple stack frames.
+
+2. AVLTNode
+Because an AVL tree is a self-balancing tree, the node structure needs to be
+extended to handle height information.
+
+
+C. Splay Tree
+
+1. Iteration vs. Recursion
+Iteration was chosen specifically for code reuse purposes. The general algorithm
+for any splay tree operation was to perform the operation then splay at that
+particular node. Using the provided functions from the binary search tree code
+allowed finding a particular node easy. Then once found, it was a matter of
+simply splaying it to the root (while its not the root, splay it). The specific
+algorithm for inserting was taken directly from the BST code, with only small
+modifications for splaying and personal preferences on handling returns (try to
+have return keyword in only one place).  
+
+2. Small functions
+They are easier to test, easier to code, easier to read,and definitely easier to
+understand. The general concept is to minimize the syntax baggage for public
+interface functions, letting them act as drivers, and have protected functions
+do the gruntwork.
+
+3. zig, zigZig, zigZag
+Named after the operations that we discussed in class, these are the driver
+functions for rotation.  Their names attempt to describe the general pattern
+(although each describes two different symmetrical patterns) of a
+node-parent-grandparent relationship.  In each function, there are calls to the
+appropriate hanging function to simulate the rotation (see 5 for more
+information).  Because of the binary ordering properties of a splay tree, each
+function could make a set of assumptions on the data as to how to rotate, or
+hang parent nodes.
+
+4. hangPLeft, hangPRight 
+The heart of rotation, these functions perform the basic operation of "hanging"
+a parent (P) off of its child in a function name specified direction.  They
+handle all of the pointer manipulation that maintains proper tree structure.
+Although synonymous with rotation to some degree, it was felt that "hanging" and
+direction gave a more complete and accurate description of what the function was
+doing compared to "rotating".  Specifically, a rotation is nothing more than
+hanging a parent off of its child, and a double rotation is nothing more than a
+strictly ordered coupling of these hang operations.
+
+
+D. Binary Heap (MaxHeap)
+
+1. Specialization
+Specializations were made to the binary heap.  This includes the omission of an
+insert() function, no generic node type for the array, and making it a max heap.
+Max heap was the most logical choice for this assignment because this assignment
+dealt with word frequency.
+
+
+2. Implementation
+The MaxHeap was implemented using parallel arrays, one each for words and
+frequency.  buildHeap() was implemented using Floyd's algorithm, which runs in
+O(n).
+
+
+3. heapSort()
+This was not implemented as a member function of the MaxHeap class.  The basic
+algorithm for this function is to print the maximum value in the heap and then
+delete the maximum value.  The deletion will also call percolateDown() on the
+new root.  The printMax() method used in heapSort() is the main bottleneck of
+this algorithm due to the calls to the system I/O.
+
+
+
+III. Analysis
+-------------
+The text of both authors, Bacon and Shakespeare, show a predominance of the
+words "the," "of," and "and."  In Bacon's "The Essays" and "The New Atlantis,"
+these common words are occurring approximately 12.4% and 14.3% of the time,
+respectively.  In Shakespeare's "Hamlet" and "All's Well That Ends Well," these
+words occur approximately 6.86% and 6.56%, respectively.  Based on this
+evidence, we conclude that Bacon did not write Shakespeare's works.
+
+Take that, you conspiracy theorists.
+
+
+
+IV. Expected Bottlenecks
+------------------------
+A. Binary Search Tree
+
+1. insert()/findNode()
+It was hard to separate these two functions because insert() relies on
+findNode() as a part of its algorithm.  This takes the longest in the BST
+because it has no balancing properties.  In the case of this sorted list, it is
+essentially a doubly-linked list with O(n) running time.
+
+
+2. getDataAsArray()/recursiveCopy()
+Stack frame allocation/deallocation from recursiveCopy() kills the performance
+of these functions.
+
+
+B. AVL Tree
+
+
+1. insert()/findNode()
+This needs to call findNode() from the BinarySearchTree class, which takes
+O(log n).
+
+
+C. Splay Tree
+
+
+1. insert()
+Similar to the AVL Tree, this needs to call findNode() from the BinarySearchTree
+class, which takes O(log n).
+
+2. splay()
+This has to be called every time.  Although this is a constant time operation
+for sorted input, the total running time will be linearly proportional to the
+amount of data.
+
+
+3. hangPRight()
+This again is called every time.  It is interesting to note that this was called
+twice as many times as insert(), though only one rotation is done per insert.
+
+
+
+V. Real Bottlenecks
+-------------------
+A. Data weirdness
+
+1. findNode()/std::min()
+When looking at the data for the BinarySearchTree, findNode() was found to
+take approximately 85% of the running time with approximately 45,000 calls.
+However, std::min() makes approximately 231,000,000,000 calls but only takes
+15.5% of the running time.  We believe the data is skewed/inaccurate because of
+these findings.
+
+
+B. Binary Search Tree
+
+1. insert()/findNode()
+As expected, these two functions took most of the processing time.
+
+2. getDataAsArray()/recursiveCopy()
+Again, as expected, these algorithms took a long time to run, although only
+one call was made to getDataAsArray().
+
+
+C. AVL Tree
+
+1. insert()
+This took the longest of the AVLTree functions at approximately 6.14%.
+
+
+D. Splay Tree
+
+1. insert()
+Total processing time was approximately 2.11%.  
+
+
+2. splay()
+Total processing time was also approximately 2.11%.
+
+
+3. hangPRight()
+This also took approximately 2.11%.  However, it is interesting to note that
+twice as many hangPRight() calls were made compared to splay().
+
+
+
+VI. Sorting Algorithm Analysis
+------------------------------
+
+1. HeapSort - Heapsort normally runs in N log N for best, worst and average case
+   It is thus reasonably efficient for binary comparisons. It should on average run
+   in parallel with quicksort.
+
+2. Selection Sort- Selection Sort is supposed to run in N^2 time for worst and best
+   case scenario, and thus should be the worst of the three algorithms, except for
+   extremely aberrant input.
+
+3. QuickSort- Quicksort should run in N log N for best and average case scenarios.
+   Again, it is reasonably efficient on binary comparisons and should be running
+   equally well as heapsort.
+
+
+In reality, heapsort is clearly the most efficient on our particular data set. We
+speculate that the reason it outperforms quicksort for all the inputs is that
+quicksort is not running at average time - our input is a poor represenatation of
+average input for quicksort. Specifically, the input is very dense, so that many
+of the different items have the same value, and thus a lot of swapping must occur,
+slowing a normally fast algorithm down. It still is not obviously enough to force
+quicksort to run at *worst* case time, as it still better than selection sort.
+Essentially, heapsort is less affected by our semi-aberrant data than quicksort,
+and selection sort is pretty bad for large data sets to begin with.
+
+(See plots for reference)
