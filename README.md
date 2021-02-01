@@ -1,15 +1,18 @@
 I. File list:
 ------------
 
-* findDealers.sh
-* forLoopsNew.sh
-* for_loops.sh
-* roulette_dealer_finder_by_time.sh
-* roulette_dealer_finder_by_time_and_game.sh
-* script.sh
-* redTeamTopology.svg
-* dvwa.yml
-* elk-playbook.yml
+* Bash Script :
+    * findDealers.sh
+    * forLoopsNew.sh
+    * for_loops.sh
+    * roulette_dealer_finder_by_time.sh
+    * roulette_dealer_finder_by_time_and_game.sh
+    * script.sh
+* Network Diagram :    
+    * redTeamTopology.svg
+* Ansible scripts :
+    * dvwa.yml
+    * elk-playbook.yml
 
 
 II. Scope and Design:
