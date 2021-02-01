@@ -8,6 +8,8 @@ I. File list:
 * roulette_dealer_finder_by_time_and_game.sh
 * script.sh
 * redTeamTopology.svg
+* dvwa.yml
+* elk-playbook.yml
 
 
 II. Scope and Design:
