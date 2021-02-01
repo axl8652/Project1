@@ -10,7 +10,7 @@ I. File list:
     * script.sh
 * Network Diagram :    
     * redTeamTopology.svg
-* Ansible scripts :
+* Ansible Playbooks :
     * dvwa.yml
     * elk-playbook.yml
 
