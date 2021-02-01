@@ -14,7 +14,7 @@ II. Scope and Design:
 --------------------
 The linux bash scripts in the repo / project serves the following purposes:
 
-Lucky Duck has lost a significant amount of money on the roulette tables over the last month.
+* Lucky Duck has lost a significant amount of money on the roulette tables over the last month.
 The largest losses occurred on March 10, 12, and 15.
 There is a player working with a Lucky Duck dealer to steal money at the roulette tables.
 The casino has a large database with data on wins and losses, player analysis, and dealer schedules.
