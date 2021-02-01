@@ -23,15 +23,15 @@ II. Scope and Design:
 
 * The network daiagram depicts the following:
    * Network components:
-       * Azure resource group
-       * Virtual network with IP address range
-       * Subnet range
-       * Flow of specific traffic (e.g., HTTP, SSH)
-       * Security group blocking traffic
-       * Load balancer
-       * Jump Box Vm , 2 DVWA Vms.
+       * Azure resource group - The azure resource group that bundles all the resources for the project.
+       * Virtual network with IP address range - Virtual network configured within the resource group.
+       * Subnet range - Subnet range specificed.
+       * Flow of specific traffic (e.g., HTTP, SSH) -  Http tarffic is served via 8080 for ELKStack , ssh enabled for Jump Box access from public IP.
+       * Security group blocking traffic - NSG with firewall rules.
+       * Load balancer - LB configuared for 2 DWVA machines.
+       * Jump Box Vm , 2 DVWA Vms - Jump Box configured for access to all azure resources , DWVA (web servers hosting DVWA)
        * Docker and Ansible are deployed in Jump Boxes.
-         * ELK stack configured in Jump Box , deployed and configuration managed by Ansible.
+         * ELK stack configured in Jump Box , deployed and configuration managed by Ansible. - Docker installed in Jump Box along with Ansible, Ansible scripts responsible for deploying and managing File Beats , Metric Beats , ELK stack.
 
 
 
