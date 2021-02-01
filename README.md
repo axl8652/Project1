@@ -8,6 +8,8 @@ I. File list:
     * roulette_dealer_finder_by_time.sh
     * roulette_dealer_finder_by_time_and_game.sh
     * script.sh
+* Evidence :
+    * 3-HW-setup-evidence
 * Network Diagram :    
     * redTeamTopology.svg
 * Ansible Playbooks :
