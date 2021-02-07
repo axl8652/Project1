@@ -37,7 +37,7 @@ _Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdow
 | RedTeam-DVWA1-vm   |           | 10.0.0.5           | NA                             | Linux/Ubuntu     |
 | RedTeam-DVWA2-vm   |           | 10.0.0.6           | NA                             | Linux/Ubuntu     |
 | RedTeam-lb         | Gateway   |                    | 52.149.218.207 (RedTeam-lb-IP) | NA               |
-| RedTeam-ELK-vm     |           |                    |                                | Linux/Ubuntu     |
+| RedTeam-ELK-vm     |           | 10.1.0.4           | 13.91.21.207                   | Linux/Ubuntu     |
 
 ### Access Policies
 
@@ -46,6 +46,7 @@ The machines on the internal network are not exposed to the public Internet.
 Only the JumpBox(RedTeam-JumpBox-vm) machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
 - 40.114.90.44
 - 52.149.218.207
+- 13.91.21.207
 
 Machines within the network can only be accessed by Load balancer.
 - _TODO: Which machine did you allow to access your ELK VM? What was its IP address?_
