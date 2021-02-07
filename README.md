@@ -49,7 +49,7 @@ Only the JumpBox(RedTeam-JumpBox-vm) machine can accept connections from the Int
 - 13.91.21.207
 
 Machines within the network can only be accessed by Load balancer.
-- _TODO: Which machine did you allow to access your ELK VM? What was its IP address?_
+- Jump Box(RedTeam-JumpBox-vm)40.114.90.44
 
 A summary of the access policies in place can be found in the table below.
 
@@ -62,12 +62,17 @@ A summary of the access policies in place can be found in the table below.
 ### Elk Configuration
 
 Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
-- _TODO: What is the main advantage of automating configuration with Ansible?_
+- ELK server can be managed remotely.
+- Deployment is quick with easier maintainance.
+- Deployments with virtually no downtime.
 
 The playbook implements the following tasks:
-- _TODO: In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc._
-- ...
-- ...
+- Install docker.io
+- Install python3-pip
+- Install docker python module
+- Increase virtual memory 
+- download elk image
+- run elk image in a docker container.
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
