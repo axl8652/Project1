@@ -21,8 +21,8 @@ This document contains the following details:
 
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.
 
-Load balancing ensures that the application will be highly _____, in addition to restricting _____ to the network.
-- _TODO: What aspect of security do load balancers protect? What is the advantage of a jump box?_
+Load balancing ensures that the application will be highly available, in addition to restricting within to the network.
+- Load balancers prevent direct access to webservers (RedTeam-DVWA1-vm , RedTeam-DVWA2-vm ), the webservers are configured with no public IP/access. Jump box(RedTeam-JumpBox-vm) is configured to deploy configurations to the   webservers using Ansible. Since the webservers running docker containers, it is fully managed via Jump Box using Ansible.
 
 Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the _____ and system _____.
 - _TODO: What does Filebeat watch for?_
@@ -31,21 +31,23 @@ Integrating an ELK server allows users to easily monitor the vulnerable VMs for 
 The configuration details of each machine may be found below.
 _Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdown_tables) to add/remove values from the table_.
 
-| Name     | Function | IP Address | Operating System |
-|----------|----------|------------|------------------|
-| Jump Box | Gateway  | 10.0.0.1   | Linux            |
-| TODO     |          |            |                  |
-| TODO     |          |            |                  |
-| TODO     |          |            |                  |
+| Name               | Functions | Private IP Address | Public IP Address              | Operating System |
+|--------------------|-----------|--------------------|--------------------------------|------------------|
+| RedTeam-JumpBox-vm | Gateway   | 10.0.0.4           | 40.114.90.44                   | Linux/Ubuntu     |
+| RedTeam-DVWA1-vm   |           | 10.0.0.5           | NA                             | Linux/Ubuntu     |
+| RedTeam-DVWA2-vm   |           | 10.0.0.6           | NA                             | Linux/Ubuntu     |
+| RedTeam-lb         | Gateway   |                    | 52.149.218.207 (RedTeam-lb-IP) | NA               |
+| RedTeam-ELK-vm     |           |                    |                                | Linux/Ubuntu     |
 
 ### Access Policies
 
 The machines on the internal network are not exposed to the public Internet. 
 
-Only the _____ machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
-- _TODO: Add whitelisted IP addresses_
+Only the JumpBox(RedTeam-JumpBox-vm) machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
+- 40.114.90.44
+- 52.149.218.207
 
-Machines within the network can only be accessed by _____.
+Machines within the network can only be accessed by Load balancer.
 - _TODO: Which machine did you allow to access your ELK VM? What was its IP address?_
 
 A summary of the access policies in place can be found in the table below.
