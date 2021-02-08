@@ -24,20 +24,20 @@ The main purpose of this network is to expose a load-balanced and monitored inst
 Load balancing ensures that the application will be highly available, in addition to restricting within to the network.
 - Load balancers prevent direct access to webservers (RedTeam-DVWA1-vm , RedTeam-DVWA2-vm ), the webservers are configured with no public IP/access. Jump box(RedTeam-JumpBox-vm) is configured to deploy configurations to the   webservers using Ansible. Since the webservers running docker containers, it is fully managed via Jump Box using Ansible.
 
-Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the _____ and system _____.
-- _TODO: What does Filebeat watch for?_
-- _TODO: What does Metricbeat record?_
+Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the logs and system metrics.
+- Filebeats collect logs from servers operating system.
+- Metricbeat collect metrics from server operting system.
 
 The configuration details of each machine may be found below.
 _Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdown_tables) to add/remove values from the table_.
 
-| Name               | Functions | Private IP Address | Public IP Address              | Operating System |
-|--------------------|-----------|--------------------|--------------------------------|------------------|
-| RedTeam-JumpBox-vm | Gateway   | 10.0.0.4           | 40.114.90.44                   | Linux/Ubuntu     |
-| RedTeam-DVWA1-vm   |           | 10.0.0.5           | NA                             | Linux/Ubuntu     |
-| RedTeam-DVWA2-vm   |           | 10.0.0.6           | NA                             | Linux/Ubuntu     |
-| RedTeam-lb         | Gateway   |                    | 52.149.218.207 (RedTeam-lb-IP) | NA               |
-| RedTeam-ELK-vm     |           | 10.1.0.4           | 13.91.21.207                   | Linux/Ubuntu     |
+| Name               | Functions              | Private IP Address | Public IP Address              | Operating System |
+|--------------------|------------------------|--------------------|--------------------------------|------------------|
+| RedTeam-JumpBox-vm | JumpBox to AZ services | 10.0.0.4           | 40.114.90.44                   | Linux/Ubuntu     |
+| RedTeam-DVWA1-vm   | WebServer              | 10.0.0.5           | NA                             | Linux/Ubuntu     |
+| RedTeam-DVWA2-vm   | WebServer              | 10.0.0.6           | NA                             | Linux/Ubuntu     |
+| RedTeam-lb         | Load Balancer          |                    | 52.149.218.207 (RedTeam-lb-IP) | NA               |
+| RedTeam-ELK-vm     | Monitoring Server      | 10.1.0.4           | 13.91.21.207                   | Linux/Ubuntu     |
 
 ### Access Policies
 
@@ -53,11 +53,13 @@ Machines within the network can only be accessed by Load balancer.
 
 A summary of the access policies in place can be found in the table below.
 
-| Name     | Publicly Accessible | Allowed IP Addresses |
-|----------|---------------------|----------------------|
-| Jump Box | Yes/No              | 10.0.0.1 10.0.0.2    |
-|          |                     |                      |
-|          |                     |                      |
+| Name               | Publicly Accessible | Allowed IP Addresses |
+|--------------------|---------------------|----------------------|
+| RedTeam-JumpBox-vm | No                  | User IP              |
+| RedTeam-lb         | Yes                 | Any                  |
+| RedTeam-ELK-vm     | Yes                 | Any                  |
+| RedTeam-DVWA1-vm   | No                  | 10.0.0.4             |
+| RedTeam-DVWA2-vm   | No                  | 10.0.0.4             |
 
 ### Elk Configuration
 
@@ -71,8 +73,8 @@ The playbook implements the following tasks:
 - Install python3-pip
 - Install docker python module
 - Increase virtual memory 
-- download elk image
-- run elk image in a docker container.
+- Download elk image
+- Run elk image in a docker container.
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
@@ -88,19 +90,16 @@ We have installed the following Beats on these machines:
 - Metric Beats
 
 These Beats allow us to collect the following information from each machine:
-- _TODO: In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see. E.g., `Winlogbeat` collects Windows logs, which we use to track user logon events, etc._
+- Filebeats collect logs from servers operating system.
+- Metricbeat collect metrics from server operting system.
 
 ### Using the Playbook
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 
 SSH into the control node and follow the steps below:
-- Copy the filebeat-config.yml file to /etc/filebeat/filebeat.yml.
+- Copy the filebeat-config.yml file to /etc/ansible/files/
 - Update the filebeat-config.yml file to include ELK private IP
-- Run the playbook, and navigate to http://<ELK IP>:5601 to check that the installation worked as expected.
-
-_TODO: Answer the following questions to fill in the blanks:_
-- _Which file is the playbook? Where do you copy it?_
-- _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
-- _Which URL do you navigate to in order to check that the ELK server is running?
-
-_As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
+- Update filebeat-config.yml, metricbeat-config.yml, hosts. Use ansible hosts file to add hosts, elk host has been used to install ELK on ELK vm , webservers host   has been used to install filebeat on webservers.
+- Run the playbook(filebeat-playbook.yml), and navigate to http://<ELK IP>:5601 to check that the installation worked as expected.
+- http://<public IP of ELK vm>:5601
+- Download filebeat-config.yml using curl           https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat > /etc/ansible/files/filebeat-config.yml
