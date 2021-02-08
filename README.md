@@ -43,12 +43,13 @@ The configuration details of each machine may be found below.
 The machines on the internal network are not exposed to the public Internet. 
 
 Only the JumpBox(RedTeam-JumpBox-vm) machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
-- 40.114.90.44
-- 52.149.218.207
-- 13.91.21.207
+- Jump Box(RedTeam-JumpBox-vm) 40.114.90.44
+  - ssh 10.0.0.4
+  - ssh 10.0.0.5
+  - ssh 10.1.0.4
 
 Machines within the network can only be accessed by Load balancer.
-- Jump Box(RedTeam-JumpBox-vm)40.114.90.44
+- 52.149.218.207 (RedTeam-lb-IP)
 
 A summary of the access policies in place can be found in the table below.
 
@@ -80,7 +81,7 @@ The following screenshot displays the result of running `docker ps` after succes
 ![TODO: Update the path with the name of your screenshot of docker ps output](Diagrams/elkcontainer.png)
 
 ### Target Machines & Beats
-This ELK server is configured to monitor the following machines:
+This ELK server(13.91.21.207) is configured to monitor the following machines:
 - 10.0.0.5
 - 10.0.0.6
 
