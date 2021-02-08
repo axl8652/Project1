@@ -4,9 +4,9 @@ The files in this repository were used to configure the network depicted below.
 
 ![TODO: Update the path with the name of your diagram](Diagrams/RedTeam-Network-Diagram.png)
 
-These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the _____ file may be used to install only certain pieces of it, such as Filebeat.
+These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the filebeat-playbook.yml file may be used to install only certain pieces of it, such as Filebeat.
 
-  - _TODO: Enter the playbook file._
+  - ![TODO:](Ansible/filebeat-playbook.yml)
 
 This document contains the following details:
 - Description of the Topology
@@ -63,7 +63,7 @@ A summary of the access policies in place can be found in the table below.
 
 ### Elk Configuration
 
-Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
+Ansible was used to automate configuration of the ELK machine.
 - ELK server can be managed remotely.
 - Deployment is quick with easier maintainance.
 - Deployments with virtually no downtime.
@@ -98,8 +98,8 @@ In order to use the playbook, you will need to have an Ansible control node alre
 
 SSH into the control node and follow the steps below:
 - Copy the filebeat-config.yml file to /etc/ansible/files/
+- You may also Download filebeat-config.yml using curl                  https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat
 - Update the filebeat-config.yml file to include ELK private IP
-- Update filebeat-config.yml, metricbeat-config.yml, hosts. Use ansible hosts file to add hosts, elk host has been used to install ELK on ELK vm , webservers host   has been used to install filebeat on webservers.
-- Run the playbook(filebeat-playbook.yml), and navigate to http://<ELK IP>:5601 to check that the installation worked as expected.
-- http://[public IP of ELK vm]:5601
-- Download filebeat-config.yml using curl           https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat > /etc/ansible/files/filebeat-config.yml
+- Update filebeat-config.yml, metricbeat-config.yml, hosts file. Use ansible hosts file to add hosts, elk host has been used to install ELK on ELK vm , webservers   host has been used to install filebeat on webservers.
+- Run the playbook(filebeat-playbook.yml).
+- http://[public IP of ELK vm]:5601 to check that the installation worked as expected
