@@ -101,5 +101,5 @@ SSH into the control node and follow the steps below:
 - Update the filebeat-config.yml file to include ELK private IP
 - Update filebeat-config.yml, metricbeat-config.yml, hosts. Use ansible hosts file to add hosts, elk host has been used to install ELK on ELK vm , webservers host   has been used to install filebeat on webservers.
 - Run the playbook(filebeat-playbook.yml), and navigate to http://<ELK IP>:5601 to check that the installation worked as expected.
-- http://<public IP of ELK vm>:5601
+- http://[public IP of ELK vm]:5601
 - Download filebeat-config.yml using curl           https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat > /etc/ansible/files/filebeat-config.yml
