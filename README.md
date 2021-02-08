@@ -58,8 +58,8 @@ A summary of the access policies in place can be found in the table below.
 | RedTeam-JumpBox-vm | No                  | User IP              |
 | RedTeam-lb         | Yes                 | Any                  |
 | RedTeam-ELK-vm     | Yes                 | Any                  |
-| RedTeam-DVWA1-vm   | No                  | 10.0.0.4             |
-| RedTeam-DVWA2-vm   | No                  | 10.0.0.4             |
+| RedTeam-DVWA1-vm   | No                  | 10.0.0.5             |
+| RedTeam-DVWA2-vm   | No                  | 10.0.0.6             |
 
 ### Elk Configuration
 
